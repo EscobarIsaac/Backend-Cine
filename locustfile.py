@@ -3,29 +3,26 @@ import random
 from datetime import datetime
 
 class CineEncuentroUser(HttpUser):
-    wait_time = between(1, 3)  # tiempo aleatorio entre cada solicitud
+    host = "http://localhost:8000"  # Gateway
 
-    host = "http://localhost:8000"  # Cambia si tu gateway expone otro puerto
+    wait_time = between(1, 3)
 
-    @task(1)
-    def crear_pelicula(self):
-        payload = {
-            "titulo": f"Pelicula Test {random.randint(1,1000)}",
-            "genero": random.choice(["Acción", "Drama", "Comedia"]),
-            "duracion": random.randint(90, 150),
-            "clasificacion": random.choice(["ATP", "13+", "16+", "18+"])
-        }
-        self.client.post("/eventos/peliculas", json=payload)
+    @task
+    def flujo_completo(self):
+        # Paso 1: Obtener lista de películas
+        with self.client.get("/eventos/peliculas", catch_response=True) as response:
+            if response.status_code == 200 and isinstance(response.json(), list) and len(response.json()) > 0:
+                peliculas = response.json()
+                pelicula = random.choice(peliculas)
 
-    @task(2)
-    def listar_peliculas(self):
-        self.client.get("/eventos/peliculas")
+                # Paso 2: Crear entrada
+                entrada_payload = {
+                    "peliculaId": pelicula.get("id", 1),  # Asegúrate de tener un campo "id"
+                    "usuario": f"usuario_{random.randint(1, 1000)}",
+                    "cantidad": 1,
+                    "fecha": datetime.utcnow().isoformat() + "Z"
+                }
 
-    @task(1)
-    def enviar_mensaje_rabbit(self):
-        mensaje = {
-            "mensaje": f"Mensaje de prueba desde locust {random.randint(1000, 9999)}",
-            "fecha": datetime.utcnow().isoformat() + "Z",
-            "tipo": "INFO"
-        }
-        self.client.post("/eventos/test-rabbit", json=mensaje)
+                self.client.post("/entradas/crear", json=entrada_payload)
+            else:
+                response.failure("❌ No se pudieron obtener películas para continuar el flujo")
