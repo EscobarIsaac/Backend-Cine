@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_23" default="true" project-jdk-name="23 (2)" project-jdk-type="JavaSDK">
-    <output url="file://$PROJECT_DIR$/out" />
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/ms-asistencia" />
+    <file type="web" url="file://$PROJECT_DIR$/ms-entradas" />
+    <file type="web" url="file://$PROJECT_DIR$/ms-eventos" />
+    <file type="web" url="file://$PROJECT_DIR$/ms-notificaciones" />
+    <file type="web" url="file://$PROJECT_DIR$/ms-usuario" />
   </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/ms-asistencia/pom.xml" />
+        <option value="$PROJECT_DIR$/ms-entradas/pom.xml" />
+        <option value="$PROJECT_DIR$/ms-eventos/pom.xml" />
+        <option value="$PROJECT_DIR$/ms-notificaciones/pom.xml" />
+        <option value="$PROJECT_DIR$/ms-usuario/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" project-jdk-name="17" project-jdk-type="JavaSDK" />
 </project>

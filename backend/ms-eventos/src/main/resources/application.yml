@@ -1,0 +1,11 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        # ====== EVENTOS (directo) ======
+        - id: ms-eventos-direct
+          uri: http://localhost:3010   # si el gateway corre en Docker: http://host.docker.internal:3010
+          predicates:
+            - Path=/api/eventos/**,/api/peliculas/**,/api/funciones/**
+          filters:
+            - StripPrefix=1

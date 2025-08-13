@@ -1,0 +1,8 @@
+spring:
+cloud:
+gateway:
+routes:
+- id: root
+uri: forward:/actuator/health
+predicates:
+- Path=/

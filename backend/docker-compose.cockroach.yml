@@ -1,0 +1,11 @@
+version: "3.8"
+services:
+  cockroach:
+    image: cockroachdb/cockroach:v24.2.5
+    container_name: cockroach
+    command: start-single-node --insecure --cache=256MiB --max-sql-memory=256MiB
+    ports:
+      - "26257:26257"   # puerto SQL
+      - "8081:8080"     # UI de admin (http://localhost:8081)
+    volumes:
+      - ./data/cockroach:/cockroach/cockroach-data
